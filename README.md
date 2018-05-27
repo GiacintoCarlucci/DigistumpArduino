@@ -1,23 +1,39 @@
-DigistumpArduino
+DigistumpArduino - Italian Keyboard Layout
 ================
 
-Files to add Digistump support (Digispark, Pro, DigiX) to Arduino 1.6.X (1.6.4+)
+This fork only adds a single file to enable DigiKeyboard usage for Italian keyboard layout.
 
-**These files are designed for install via the Arduino Boards Manager:** 
+```c
+//Include the _It suffixed version instead of the normal one and the rest goes same as the original lib.
+#include "DigiKeyboard_It.h"
+//Delay time
+#define D 100
 
-Board manager URL: http://digistump.com/package_digistump_index.json
+//No need to setup anything
+void setup() {
+  }
 
-**Full Install Instructions:** 
-
-Digispark: http://digistump.com/wiki/digispark/tutorials/connecting
-
-Digispark Pro: http://digistump.com/wiki/digispark/tutorials/connectingpro
-
-DigiX: http://digistump.com/wiki/digix/tutorials/software
-
-**To compile:**
-
-Micronucleus is the only executable in these packages that is pre-compiled:
-
-Micronucleus: https://github.com/micronucleus/micronucleus/tree/80419704f68bf0783c5de63a6a4b9d89b45235c7
-Dependencies: libusb and possibly lib32stdc on linux - (on ubuntu get it by issuing: apt-get install lib32stdc++6)
+//This piece of code just prints ASCII characters (0-127)
+void loop() {
+  int i=0;
+  while(i<128){
+    // this is generally not necessary but with some older systems it helps to
+    // prevent missing the first character after a delay:
+    // ***Note the use of DigiKeyboardIt***
+    DigiKeyboardIt.sendKeyStroke(0);
+    // It's better to use DigiKeyboard.delay() over the regular Arduino delay()
+    // if doing keyboard stuff because it keeps talking to the computer to make
+    // sure the computer knows the keyboard is alive and connected
+    DigiKeyboard.delay(D);
+    DigiKeyboardIt.print(i);
+    DigiKeyboardIt.print(" ");
+    DigiKeyboardIt.print((char)i);
+    DigiKeyboardIt.sendKeyStroke(KEY_ENTER);
+    DigiKeyboard.delay(D);
+    i++;
+  }
+  //You can also print strings:
+  DigiKeyboardIt.println("Hello XYZ !\"$%&/()=? [] {}!");
+  for (;;) {}
+}
+```
