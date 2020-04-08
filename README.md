@@ -3,6 +3,8 @@ DigistumpArduino - Italian Keyboard Layout
 
 This fork only adds a single file to enable DigiKeyboard usage for Italian keyboard layout.
 
+Want to know the story behind this repo? [Here you are](https://medium.com/@giacintocarlucci/the-cheapest-rubber-ducky-b2e95901d504)
+
 ```c
 //Include the _It suffixed version instead of the normal one and the rest goes same as the original lib.
 #include "DigiKeyboard_It.h"
